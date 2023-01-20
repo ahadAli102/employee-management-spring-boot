@@ -50,6 +50,16 @@ public class EmployeeService {
         }
     }
 
+    public ResponseEntity<?> delete(Long id) {
+        Optional<Employee> employee = employeeDao.findById(id);
+        if(employee.isPresent()){
+            employeeDao.delete(employee.get());
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     public ResponseEntity<?> findById(Long id) {
         Optional<Employee> employee = employeeDao.findById(id);
         if(employee.isPresent()){

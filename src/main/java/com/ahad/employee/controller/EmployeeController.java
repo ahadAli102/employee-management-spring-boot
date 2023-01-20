@@ -27,6 +27,11 @@ public class EmployeeController {
         return employeeService.update(id, employee);
     }
 
+    @DeleteMapping("{id}")
+    private ResponseEntity<?> delete(@PathVariable("id") Long id){
+        return employeeService.delete(id);
+    }
+
     @PutMapping
     public ResponseEntity<?> createEmployee(@RequestBody Employee employee) {
         return employeeService.save(employee);
