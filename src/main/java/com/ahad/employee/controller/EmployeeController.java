@@ -14,13 +14,16 @@ public class EmployeeController {
 
     @GetMapping
     private ResponseEntity<?> getAllEmployee(){
-        System.out.println("EmployeeController:"+this.hashCode());
         return employeeService.findAll();
+    }
+
+    @GetMapping("{id}")
+    private ResponseEntity<?> getEmployee(@PathVariable("id") Long id){
+        return employeeService.findById(id);
     }
 
     @PostMapping
     public ResponseEntity<?> createEmployee(@RequestBody Employee employee) {
-        System.out.println("EmployeeController:"+this.hashCode());
         return employeeService.save(employee);
     }
 }

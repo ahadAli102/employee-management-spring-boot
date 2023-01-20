@@ -3,11 +3,13 @@ package com.ahad.employee.service;
 import com.ahad.employee.dao.EmployeeDao;
 import com.ahad.employee.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -35,6 +37,14 @@ public class EmployeeService {
             return ResponseEntity.created(URI.create("Employee")).body(employee);
         }else{
             return ResponseEntity.badRequest().build();
+        }
+    }
+    public ResponseEntity<?> findById(Long id) {
+        Optional<Employee> employee = employeeDao.findById(id);
+        if(employee.isPresent()){
+            return ResponseEntity.status(HttpStatus.OK).body(employee.get());
+        }else{
+            return ResponseEntity.notFound().build();
         }
     }
 }
