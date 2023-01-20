@@ -22,7 +22,12 @@ public class EmployeeController {
         return employeeService.findById(id);
     }
 
-    @PostMapping
+    @PostMapping("{id}")
+    private ResponseEntity<?> update(@PathVariable("id") Long id,@RequestBody Employee employee){
+        return employeeService.update(id, employee);
+    }
+
+    @PutMapping
     public ResponseEntity<?> createEmployee(@RequestBody Employee employee) {
         return employeeService.save(employee);
     }

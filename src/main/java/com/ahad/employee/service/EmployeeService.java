@@ -39,6 +39,17 @@ public class EmployeeService {
             return ResponseEntity.badRequest().build();
         }
     }
+    public ResponseEntity<?> update(Long id,Employee saveEmployee) {
+        Optional<Employee> employee = employeeDao.findById(id);
+        if(employee.isPresent()){
+            saveEmployee.setId(id);
+            employeeDao.save(saveEmployee);
+            return ResponseEntity.status(HttpStatus.OK).body(saveEmployee);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     public ResponseEntity<?> findById(Long id) {
         Optional<Employee> employee = employeeDao.findById(id);
         if(employee.isPresent()){
