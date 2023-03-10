@@ -38,6 +38,18 @@ export const addEmp = createAsyncThunk(
   }
 );
 
+export const editEmp = createAsyncThunk(
+  "employees.editEmp",
+  (employee: Employee) => {
+    return axios
+      .post(
+        "http://localhost:8080/hsenid/api/v1/employees/" + employee.id,
+        employee
+      )
+      .then((response) => response.data);
+  }
+);
+
 const employeeSlice = createSlice({
   name: "employee",
   initialState: initialState,
@@ -91,6 +103,25 @@ const employeeSlice = createSlice({
       state.delete.loading = false;
       state.delete.success = "";
       state.delete.error = action.error.message || "Failed to fetch employees";
+    });
+
+    builder.addCase(editEmp.pending, (state) => {
+      state.update.loading = true;
+    });
+    builder.addCase(
+      editEmp.fulfilled,
+      (state, action: PayloadAction<Employee>) => {
+        state.get.employees = state.get.employees.map((emp) =>
+          emp.id === action.payload.id ? { ...action.payload } : emp
+        );
+        state.update.loading = false;
+        state.update.error = "";
+        state.update.employee = action.payload;
+      }
+    );
+    builder.addCase(editEmp.rejected, (state, action) => {
+      state.update.loading = false;
+      state.update.error = action.error.message || "Failed to fetch employees";
     });
   },
 });

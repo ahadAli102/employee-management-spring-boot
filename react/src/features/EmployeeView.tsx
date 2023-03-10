@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { AddEmployeeView } from "../component/AddEmployeeView";
 import { SingleEmployeeView } from "../component/SingleEmployeeView";
 import { Employee } from "../model/Employee";
-import { fetchEmployees, deleteEmp, addEmp } from "./employeeSlice";
+import { fetchEmployees, deleteEmp, addEmp, editEmp } from "./employeeSlice";
 
 export const EmployeeView = () => {
   const employee = useAppSelector((state) => state.employee.get);
@@ -33,7 +33,7 @@ export const EmployeeView = () => {
     <div className="row">
       {addEmployeeView && <AddEmployeeView addEmployee={addEmployee} />}
       <button
-        className="btn btn-primery"
+        className="btn btn-primery me-2"
         onClick={() => setAddEmployeeView(true)}
       >
         Add Employee
