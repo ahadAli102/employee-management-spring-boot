@@ -23,7 +23,7 @@ public class EmployeeController {
     }
 
     @PostMapping("{id}")
-    private ResponseEntity<?> update(@PathVariable("id") Long id,@RequestBody Employee employee){
+    private ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody Employee employee){
         return employeeService.update(id, employee);
     }
 
