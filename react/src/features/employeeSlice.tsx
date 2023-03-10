@@ -12,6 +12,24 @@ export const fetchEmployees = createAsyncThunk(
   }
 );
 
+// export const  = createAsyncThunk(
+//   ,
+//   (employeeId: number) => {
+//     return axios
+//
+//       .then((response) => response.data);
+//   }
+// );
+
+export const deleteEmp = createAsyncThunk(
+  "employees.deleteEmp",
+  (employee: Employee) => {
+    return axios
+      .delete("http://localhost:8080/hsenid/api/v1/employees/" + employee.id)
+      .then((response) => employee.id);
+  }
+);
+
 const employeeSlice = createSlice({
   name: "employee",
   initialState: initialState,
@@ -32,6 +50,23 @@ const employeeSlice = createSlice({
       state.get.loading = false;
       state.get.employees = [];
       state.get.error = action.error.message || "Failed to fetch employees";
+    });
+
+    builder.addCase(deleteEmp.pending, (state) => {
+      state.delete.loading = true;
+    });
+    builder.addCase(deleteEmp.fulfilled, (state, action) => {
+      state.delete.loading = false;
+      state.delete.success = "Delete employee";
+      state.delete.error = "";
+      state.get.employees = state.get.employees.filter(
+        (e) => e.id !== action.payload
+      );
+    });
+    builder.addCase(deleteEmp.rejected, (state, action) => {
+      state.delete.loading = false;
+      state.delete.success = "";
+      state.delete.error = action.error.message || "Failed to fetch employees";
     });
   },
 });
