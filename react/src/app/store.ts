@@ -5,6 +5,10 @@ const store = configureStore({
   reducer: {
     employee: employeeReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export default store;
